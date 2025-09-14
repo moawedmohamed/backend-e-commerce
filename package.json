@@ -8,7 +8,6 @@
   },
   "keywords": [],
   "author": "",
-  "type": "module",
   "license": "ISC",
   "packageManager": "pnpm@10.14.0",
   "devDependencies": {
@@ -20,6 +19,9 @@
     "typescript": "^5.9.2"
   },
   "dependencies": {
+    "@arcjet/node": "1.0.0-beta.11",
+    "@neondatabase/serverless": "^1.0.1",
+    "cors": "^2.8.5",
     "dotenv": "^17.2.2",
     "express": "^5.1.0",
     "helmet": "^8.1.0",
