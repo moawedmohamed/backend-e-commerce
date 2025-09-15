@@ -13,9 +13,6 @@ app.use(morgan('dev'))
 app.use(cors())
 app.use(express.json())
 app.use("/api/products", ProductsRouter)
-app.get('/', (req, res) => {
-    res.json("hello")
-});
 const PORT = process.env.PORT
 const initialDB = async () => {
     try {
