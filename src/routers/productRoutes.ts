@@ -4,9 +4,9 @@ import { createProduct, deleteProduct, getProductById, getProducts, updateProduc
 const ProductsRouter = Router()
 ProductsRouter.get('/', getProducts)
 ProductsRouter.get('/:id', getProductById)
-ProductsRouter.post('/post', createProduct)
-ProductsRouter.get('/:id', updateProduct)
-ProductsRouter.get('/:id', deleteProduct)
+ProductsRouter.post('/', createProduct)
+ProductsRouter.put('/:id', updateProduct)
+ProductsRouter.delete('/:id', deleteProduct)
 
 export default ProductsRouter
 

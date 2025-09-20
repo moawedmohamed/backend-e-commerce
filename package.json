@@ -19,6 +19,7 @@
     "typescript": "^5.9.2"
   },
   "dependencies": {
+    "@arcjet/inspect": "1.0.0-beta.11",
     "@arcjet/node": "1.0.0-beta.11",
     "@neondatabase/serverless": "^1.0.1",
     "cors": "^2.8.5",
