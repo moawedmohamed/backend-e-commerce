@@ -62,8 +62,4 @@ const initialDB = async () => {
         console.log(error);
     }
 }
-initialDB().then(() => {
-    app.listen(PORT, () => {
-        console.log('This app ruining on port', PORT);
-    })
-})
+export default app; 
