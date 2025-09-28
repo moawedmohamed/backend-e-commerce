@@ -14,33 +14,33 @@ app.use(morgan('dev'))
 app.use(cors())
 app.use(express.json())
 // using arcJet rate-limiting to all routes
-// app.use(async (req, res, next) => {
-//     try {
-//         const decision = await aj.protect(req, {
-//             requested: 1,
-//         })
-//         if (decision.isDenied()) {
-//             // res.status(403).json({ error: "Blocked by Shield" });
-//             if (decision.reason.isRateLimit()) {
-//                 res.status(429).json({ error: "Too many requests" })
-//             } else if (decision.reason.isBot()) {
-//                 res.status(403).json({ error: "Bot is denied" })
-//             } else {
-//                 res.status(403).json({ error: "Forbidden" })
+app.use(async (req, res, next) => {
+    try {
+        const decision = await aj.protect(req, {
+            requested: 1,
+        })
+        if (decision.isDenied()) {
+            // res.status(403).json({ error: "Blocked by Shield" });
+            if (decision.reason.isRateLimit()) {
+                res.status(429).json({ error: "Too many requests" })
+            } else if (decision.reason.isBot()) {
+                res.status(403).json({ error: "Bot is denied" })
+            } else {
+                res.status(403).json({ error: "Forbidden" })
 
-//             } decision.reason.isShield
-//             return
-//         }
-//         if (decision.results.some((result) => result.reason.isBot() && result.reason.isSpoofed())) {
-//             res.status(403).json({ error: "Spoofed is denied" })
-//             return;
-//         }
-//         next()
-//     } catch (error) {
-//         console.log("arhJet error", error);
-//         next(error)
-//     }
-// })
+            } decision.reason.isShield
+            return
+        }
+        if (decision.results.some((result) => result.reason.isBot() && result.reason.isSpoofed())) {
+            res.status(403).json({ error: "Spoofed is denied" })
+            return;
+        }
+        next()
+    } catch (error) {
+        console.log("arhJet error", error);
+        next(error)
+    }
+})
 app.use("/api/products", ProductsRouter)
 const PORT = process.env.PORT
 const initialDB = async () => {
