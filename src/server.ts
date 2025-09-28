@@ -11,7 +11,12 @@ dotenv.config();
 const app = express()
 app.use(helmet())
 app.use(morgan('dev'))
-app.use(cors())
+app.use(cors({
+    origin: ["http://localhost:5173", "https://your-frontend-domain.com"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true
+}));
+
 app.use(express.json())
 // using arcJet rate-limiting to all routes
 app.use(async (req, res, next) => {
