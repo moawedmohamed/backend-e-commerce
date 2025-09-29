@@ -1,5 +1,5 @@
 import dotenv from 'dotenv'
-import express from "express"
+import express, { NextFunction, Request, Response } from "express"
 import helmet from 'helmet'
 import morgan from 'morgan'
 import cors from 'cors'
@@ -13,7 +13,7 @@ app.use(helmet())
 app.use(morgan('dev'))
 app.use(
     cors({
-        origin: "https://frontend-e-comcros merce-alpha.vercel.app",
+        origin: "https://frontend-e-comcrosmerce-alpha.vercel.app",
         methods: ["GET", "POST", "PUT", "DELETE"],
         allowedHeaders: ["Content-Type", "Authorization"],
     })
@@ -21,33 +21,33 @@ app.use(
 
 app.use(express.json())
 // using arcJet rate-limiting to all routes
-app.use(async (req, res, next) => {
-    try {
-        const decision = await aj.protect(req, {
-            requested: 1,
-        })
-        if (decision.isDenied()) {
-            // res.status(403).json({ error: "Blocked by Shield" });
-            if (decision.reason.isRateLimit()) {
-                res.status(429).json({ error: "Too many requests" })
-            } else if (decision.reason.isBot()) {
-                res.status(403).json({ error: "Bot is denied" })
-            } else {
-                res.status(403).json({ error: "Forbidden" })
+// app.use(async (req:Request, res:Response, next:NextFunction) => {
+//     try {
+//         const decision = await aj.protect(req, {
+//             requested: 1,
+//         })
+//         if (decision.isDenied()) {
+//             // res.status(403).json({ error: "Blocked by Shield" });
+//             if (decision.reason.isRateLimit()) {
+//                 res.status(429).json({ error: "Too many requests" })
+//             } else if (decision.reason.isBot()) {
+//                 res.status(403).json({ error: "Bot is denied" })
+//             } else {
+//                 res.status(403).json({ error: "Forbidden" })
 
-            } decision.reason.isShield
-            return
-        }
-        if (decision.results.some((result) => result.reason.isBot() && result.reason.isSpoofed())) {
-            res.status(403).json({ error: "Spoofed is denied" })
-            return;
-        }
-        next()
-    } catch (error) {
-        console.log("arhJet error", error);
-        next(error)
-    }
-})
+//             } decision.reason.isShield
+//             return
+//         }
+//         if (decision.results.some((result) => result.reason.isBot() && result.reason.isSpoofed())) {
+//             res.status(403).json({ error: "Spoofed is denied" })
+//             return;
+//         }
+//         next()
+//     } catch (error) {
+//         console.log("arhJet error", error);
+//         next(error)
+//     }
+// })
 app.use("/api/products", ProductsRouter)
 const PORT = process.env.PORT
 const initialDB = async () => {
