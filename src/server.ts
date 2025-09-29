@@ -5,7 +5,7 @@ import morgan from 'morgan'
 import cors from 'cors'
 import ProductsRouter from './routers/productRoutes'
 import { sql } from './config/db'
-import { aj } from './lib/arcJet'
+// import { aj } from './lib/arcJet'
 dotenv.config();
 
 const app = express()

@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { sql } from "../config/db";
 
 // 🟢 Get all products
-export const getProducts = async (req: Request, res: Response): Promise<Response> => {
+export const getProducts = async (_req: Request, res: Response): Promise<Response> => {
     try {
         const products = await sql`
       SELECT * FROM products ORDER BY created_at DESC
@@ -16,7 +16,7 @@ export const getProducts = async (req: Request, res: Response): Promise<Response
 };
 
 // 🟢 Create new product
-export const createProduct = async (req: Request, res: Response): Promise<Response> => {
+export const createProduct = async (req: Request<{}, {}, { name: string; price: string; image: string }>, res: Response): Promise<Response> => {
     const { name, price, image } = req.body;
 
     if (!name || !price || !image) {
@@ -37,7 +37,7 @@ export const createProduct = async (req: Request, res: Response): Promise<Respon
 };
 
 // 🟢 Get product by ID
-export const getProductById = async (req: Request, res: Response): Promise<Response> => {
+export const getProductById = async (req: Request<{ id: string }>, res: Response): Promise<Response> => {
     const { id } = req.params;
 
     try {
@@ -55,7 +55,7 @@ export const getProductById = async (req: Request, res: Response): Promise<Respo
 };
 
 // 🟢 Update product
-export const updateProduct = async (req: Request, res: Response): Promise<Response> => {
+export const updateProduct = async (req: Request<{ id: string }, {}, { name: string; price: number; image: string }>, res: Response): Promise<Response> => {
     const { id } = req.params;
     const { name, price, image } = req.body;
 
@@ -77,7 +77,7 @@ export const updateProduct = async (req: Request, res: Response): Promise<Respon
 };
 
 // 🟢 Delete product
-export const deleteProduct = async (req: Request, res: Response): Promise<Response> => {
+export const deleteProduct = async (req: Request<{ id: string }>, res: Response): Promise<Response> => {
     const { id } = req.params;
 
     try {
