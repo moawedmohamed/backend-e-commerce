@@ -11,11 +11,13 @@ dotenv.config();
 const app = express()
 app.use(helmet())
 app.use(morgan('dev'))
-app.use(cors({
-    origin: ["http://localhost:5173", "https://your-frontend-domain.com"],
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true
-}));
+app.use(
+    cors({
+        origin: "https://frontend-e-comcros merce-alpha.vercel.app",
+        methods: ["GET", "POST", "PUT", "DELETE"],
+        allowedHeaders: ["Content-Type", "Authorization"],
+    })
+);
 
 app.use(express.json())
 // using arcJet rate-limiting to all routes
